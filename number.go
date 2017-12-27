@@ -10,15 +10,15 @@ const (
 
 type Nubmber = float64
 
-func (n *Nubmber) AlmostZero() (bool) {
-	if math.Abs(n) > PRECISION {
+func almostZero(n Nubmber) (bool) {
+	if math.Abs(float64(n)) > PRECISION {
 		return false
 	}
 	return true
 }
 
-func (n *Nubmber) AlmostEquals(n1 *Nubmber) (bool) {
-	if math.Abs(n - n1) > PRECISION {
+func almostEquals(n, n1 Nubmber) (bool) {
+	if math.Abs(float64(n - n1)) > PRECISION {
 		return false
 	}
 	return true

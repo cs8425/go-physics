@@ -72,13 +72,26 @@ func (v *Vec3) IsAntiparallelTo(v1 *Vec3) (bool) {
 }
 
 /**
+ * Check if a vector equals is equal to another one.
+ * @method IsEquals
+ * @param {Vec3} v
+ * @return bool
+ */
+func (v *Vec3) IsEquals(v1 *Vec3) (bool) {
+	if (v[0] == v1[0]) && (v[1] == v1[1]) && (v[2] == v1[2]) {
+		return true
+	}
+	return false
+}
+
+/**
  * Check if a vector equals is almost equal to another one.
  * @method almostEquals
  * @param {Vec3} v
  * @return bool
  */
 func (v *Vec3) AlmostEquals(v1 *Vec3) (bool) {
-	if v[0].AlmostEquals(v1[0]) && v[1].AlmostEquals(v1[1]) && v[2].AlmostEquals(v1[2]) {
+	if almostEquals(v[0], v1[0]) && almostEquals(v[1], v1[1]) && almostEquals(v[2], v1[2]) {
 		return true
 	}
 	return false
@@ -90,7 +103,7 @@ func (v *Vec3) AlmostEquals(v1 *Vec3) (bool) {
  * @param {Number} precision
  */
 func (v *Vec3) AlmostZero() (bool) {
-	if v[0].AlmostZero() && v[1].AlmostZero() && v[2].AlmostZero() {
+	if almostZero(v[0]) && almostZero(v[1]) && almostZero(v[2]) {
 		return true
 	}
 	return false
