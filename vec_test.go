@@ -88,4 +88,15 @@ func TestVAdd(t *testing.T) {
 
 }
 
+func TestIsAntiparallelTo(t *testing.T) {
+
+        var v = NewVec3().Set(1, 0, 0)
+        var u = NewVec3().Set(-1, 0, 0)
+
+	if !v.IsAntiparallelTo(u) {
+		t.Error("Error IsAntiparallelTo, got ", v.IsAntiparallelTo(u))
+	}
+
+}
+
 

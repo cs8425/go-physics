@@ -4,9 +4,9 @@ import (
 	"math"
 )
 
-type Vec3 [3]Nubmber // order: x, y, z
+type Vec3 [3]Number // order: x, y, z
 
-/*func NewVec3(x, y, z Nubmber) (*Vec3) {
+/*func NewVec3(x, y, z Number) (*Vec3) {
 	v := &Vec3{ x, y, z }
 	return v
 }*/
@@ -24,7 +24,7 @@ func NewVec3() (*Vec3) {
  * @param {Number} z
  * @return Vec3
  */
-func (v *Vec3) Set(x, y, z Nubmber) (*Vec3) {
+func (v *Vec3) Set(x, y, z Number) (*Vec3) {
 	v[0], v[1], v[2] = x, y, z
 	return v
 }
@@ -116,7 +116,7 @@ func (v *Vec3) AlmostZero() (bool) {
  * @param {Vec3} v
  * @return {Number}
  */
-func (v *Vec3) Dot(v1 *Vec3) (Nubmber) {
+func (v *Vec3) Dot(v1 *Vec3) (Number) {
 	return v[0] * v1[0] + v[1] * v1[1] + v[2] * v1[2]
 }
 
@@ -125,7 +125,7 @@ func (v *Vec3) Dot(v1 *Vec3) (Nubmber) {
  * @method LengthSquared
  * @return {Number}
  */
-func (v *Vec3) LengthSquared(v1 *Vec3) (Nubmber) {
+func (v *Vec3) LengthSquared() (Number) {
 	return v.Dot(v)
 }
 
@@ -196,11 +196,11 @@ func (v *Vec3) Cross(v1 *Vec3, target *Vec3) (*Vec3) {
  * @return {Number}
  * @deprecated Use .length() instead
  */
-func (v *Vec3) Norm() (Nubmber) {
+func (v *Vec3) Norm() (Number) {
 	x, y, z := v[0], v[1], v[2]
 	n := math.Sqrt(float64(x*x + y*y + z*z))
 
-	return Nubmber(n)
+	return Number(n)
 }
 
 /**
@@ -208,7 +208,7 @@ func (v *Vec3) Norm() (Nubmber) {
  * @method Length
  * @return {Number}
  */
-func (v *Vec3) Length() (Nubmber) {
+func (v *Vec3) Length() (Number) {
 	return v.Norm()
 }
 
@@ -217,7 +217,7 @@ func (v *Vec3) Length() (Nubmber) {
  * @method Normalize
  * @return {Number} Returns the norm of the vector
  */
-func (v *Vec3) Normalize() (Nubmber) {
+func (v *Vec3) Normalize() (Number) {
 
 	n := v.Norm()
 	if n > 0.0 {
@@ -263,7 +263,7 @@ func (v *Vec3) Unit(target *Vec3) (*Vec3) {
  * @param  {Vec3} p
  * @return {Number}
  */
-func (v *Vec3) DistanceSquared(p *Vec3) (Nubmber) {
+func (v *Vec3) DistanceSquared(p *Vec3) (Number) {
 	x, y, z := v[0], v[1], v[2]
 	px, py, pz := p[0], p[1], p[2]
 
@@ -276,9 +276,9 @@ func (v *Vec3) DistanceSquared(p *Vec3) (Nubmber) {
  * @param  {Vec3} p
  * @return {Number}
  */
-func (v *Vec3) DistanceTo(p *Vec3) (Nubmber) {
+func (v *Vec3) DistanceTo(p *Vec3) (Number) {
 	diSq := v.DistanceSquared(p)
-	return Nubmber(math.Sqrt(diSq))
+	return Number(math.Sqrt(diSq))
 }
 
 
@@ -289,7 +289,7 @@ func (v *Vec3) DistanceTo(p *Vec3) (Nubmber) {
  * @param {Vec3} target The vector to save the result in.
  * @return {Vec3}
  */
-func (v *Vec3) Scale(scalar Nubmber, target *Vec3) (*Vec3) {
+func (v *Vec3) Scale(scalar Number, target *Vec3) (*Vec3) {
 	if target == nil {
 		target = &Vec3{}
 	}
@@ -329,7 +329,7 @@ func (v *Vec3) VMul(vector *Vec3, target *Vec3) (*Vec3) {
  * @param {Vec3} target The vector to save the result in.
  * @return {Vec3}
  */
-func (v *Vec3) AddScaledVector(scalar Nubmber, vector *Vec3, target *Vec3) (*Vec3) {
+func (v *Vec3) AddScaledVector(scalar Number, vector *Vec3, target *Vec3) (*Vec3) {
 	if target == nil {
 		target = &Vec3{}
 	}
@@ -348,7 +348,7 @@ func (v *Vec3) AddScaledVector(scalar Nubmber, vector *Vec3, target *Vec3) (*Vec
  * @param {Number} t A number between 0 and 1. 0 will make this function return u, and 1 will make it return v. Numbers in between will generate a vector in between them.
  * @param {Vec3} target
  */
-func (v *Vec3) Lerp(v1 *Vec3, t Nubmber, target *Vec3) (*Vec3) {
+func (v *Vec3) Lerp(v1 *Vec3, t Number, target *Vec3) (*Vec3) {
 	if target == nil {
 		target = &Vec3{}
 	}

@@ -8,16 +8,16 @@ const (
 	PRECISION = 1e-6
 )
 
-type Nubmber = float64
+type Number = float64
 
-func almostZero(n Nubmber) (bool) {
+func almostZero(n Number) (bool) {
 	if math.Abs(float64(n)) > PRECISION {
 		return false
 	}
 	return true
 }
 
-func almostEquals(n, n1 Nubmber) (bool) {
+func almostEquals(n, n1 Number) (bool) {
 	if math.Abs(float64(n - n1)) > PRECISION {
 		return false
 	}
