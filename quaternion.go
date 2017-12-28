@@ -92,17 +92,17 @@ func (q *Quat) ToAxisAngle(targetAxis *Vec3) (*Vec3, Number) {
 
 	w := float64(q[3])
 	angle := Number(2 * math.Acos(w))
-	s := math.Sqrt(1 - w*w) // assuming quaternion normalised then w is less than 1, so term always positive.
+	s := Number(math.Sqrt(1 - w*w)) // assuming quaternion normalised then w is less than 1, so term always positive.
 
 	if (s < 0.001) { // test to avoid divide by zero, s is always positive due to sqrt
 		// if s close to zero then direction of axis not important
-		targetAxis[0] = q[0]; // if it is important that axis is normalised then replace with x=1; y=z=0;
-		targetAxis[1] = q[1];
-		targetAxis[2] = q[2];
+		targetAxis[0] = q[0] // if it is important that axis is normalised then replace with x=1; y=z=0;
+		targetAxis[1] = q[1]
+		targetAxis[2] = q[2]
 	} else {
-		targetAxis[0] = q[0] / s; // normalise axis
-		targetAxis[1] = q[1] / s;
-		targetAxis[2] = q[2] / s;
+		targetAxis[0] = q[0] / s // normalise axis
+		targetAxis[1] = q[1] / s
+		targetAxis[2] = q[2] / s
 	}
 
 	return targetAxis, angle
@@ -174,10 +174,10 @@ func (q *Quat) Inverse(target *Quat) (*Quat) {
 	q.Conjugate(target)
 	inorm2 := 1 / (x*x + y*y + z*z + w*w)
 
-	target[0] *= inorm2;
-	target[1] *= inorm2;
-	target[2] *= inorm2;
-	target[3] *= inorm2;
+	target[0] *= inorm2
+	target[1] *= inorm2
+	target[2] *= inorm2
+	target[3] *= inorm2
 
 	return target
 }
@@ -193,10 +193,10 @@ func (q *Quat) Conjugate(target *Quat) (*Quat) {
 		target = &Quat{}
 	}
 
-	target[0] = -q[0];
-	target[1] = -q[1];
-	target[2] = -q[2];
-	target[3] = q[3];
+	target[0] = -q[0]
+	target[1] = -q[1]
+	target[2] = -q[2]
+	target[3] = q[3]
 
 	return target
 }
@@ -212,11 +212,11 @@ func (q *Quat) Normalize() (*Quat) {
 	if l == 0 {
 		q[0], q[1], q[2], q[3] = 0, 0, 0, 0
 	} else {
-		l = 1 / l
-		q[0] *= l
-		q[1] *= l
-		q[2] *= l
-		q[3] *= l
+		s := Number(1 / l)
+		q[0] *= s
+		q[1] *= s
+		q[2] *= s
+		q[3] *= s
 	}
 	return q
 }

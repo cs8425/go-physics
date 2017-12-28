@@ -278,7 +278,7 @@ func (v *Vec3) DistanceSquared(p *Vec3) (Number) {
  */
 func (v *Vec3) DistanceTo(p *Vec3) (Number) {
 	diSq := v.DistanceSquared(p)
-	return Number(math.Sqrt(diSq))
+	return Number(math.Sqrt(float64(diSq)))
 }
 
 
@@ -373,7 +373,7 @@ func (v *Vec3) Tangents(t1 *Vec3, t2 *Vec3) {
 		inorm := 1 / norm
 		n := v.Scale(inorm, nil)
 		randVec := NewVec3()
-		if(math.Abs(n[0]) < 0.9){
+		if(math.Abs(float64(n[0])) < 0.9){
 			randVec.Set(1, 0, 0)
 		} else {
 			randVec.Set(0, 1, 0)
