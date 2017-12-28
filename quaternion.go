@@ -303,45 +303,131 @@ func (q *Quat) VMult(v *Vec3, target *Vec3) (*Vec3) {
  * @method toEuler
  * @param {Vec3} target
  * @param string order Three-character string e.g. "YZX", which also is default.
- */
+ *
+ * refactor from Three.js
+*/
 func (q *Quat) ToEuler(target *Vec3, order AxisOrder) (*Vec3) {
 	if target == nil {
 		target = NewVec3()
 	}
 
-	var attitude, bank float64
-	heading := math.NaN()
+	// target[0], x
+	// target[1], y
+	// target[2], z
 
 	x, y, z, w := q[0], q[1], q[2], q[3]
 
+	x2, y2, z2 := x + x, y + y, z + z
+	xx, xy, xz := x * x2, x * y2, x * z2
+	yy, yz, zz := y * y2, y * z2, z * z2
+	wx, wy, wz := w * x2, w * y2, w * z2
+
+	m11 := 1 - ( yy + zz )
+	m12 := xy - wz
+	m13 := xz + wy
+
+	m21 := xy + wz
+	m22 := 1 - ( xx + zz )
+	m32 := yz - wx
+
+	m31 := xz - wy
+	m23 := yz + wx
+	m33 := 1 - ( xx + yy )
+
+
 	switch order {
+	case XYZ:
+		target[1] = Number(math.Asin( clampF( m13, -1, 1 ) ))
+
+		if math.Abs(float64( m13 )) < 0.99999 {
+
+			target[0] = math.Atan2( float64(-m23), float64(m33) )
+			target[2] = math.Atan2( float64(-m12), float64(m11) )
+
+		} else {
+
+			target[0] = math.Atan2( float64(m32), float64(m22) )
+			target[2] = 0;
+
+		}
+
+	case YXZ:
+		target[0] = Number(math.Asin( -clampF( m23, -1, 1 ) ))
+
+		if math.Abs(float64( m23 )) < 0.99999 {
+
+			target[1] = math.Atan2( float64(m13), float64(m33) )
+			target[2] = math.Atan2( float64(m21), float64(m22) )
+
+		} else {
+
+			target[1] = math.Atan2( float64(-m31), float64(m11) )
+			target[2] = 0
+
+		}
+
+	case ZXY:
+		target[0] = Number(math.Asin( clampF( m32, -1, 1 ) ))
+
+		if math.Abs(float64( m32 )) < 0.99999 {
+
+			target[1] = math.Atan2( float64(-m31), float64(m33) )
+			target[2] = math.Atan2( float64(-m12), float64(m22) )
+
+		} else {
+
+			target[1] = 0
+			target[2] = math.Atan2( float64(m21), float64(m11) )
+
+		}
+
+	case ZYX:
+		target[1] = Number(math.Asin( -clamp( m31, -1, 1 ) ))
+
+		if math.Abs(float64( m31 )) < 0.99999 {
+
+			target[0] = math.Atan2( float64(m32), float64(m33) )
+			target[2] = math.Atan2( float64(m21), float64(m11) )
+
+		} else {
+
+			target[0] = 0
+			target[2] = math.Atan2( float64(-m12), float64(m22) )
+
+		}
+
 	default:
-		fallthrough // TODO: not supported yet. :(
+		fallthrough
 	case YZX:
-		test := x*y + z*w
-		if test > 0.499 { // singularity at north pole
-			heading = 2 * math.Atan2(float64(x), float64(w))
-			attitude = math.Pi / 2
-			bank = 0
+		target[2] = Number(math.Asin( clamp( m21, -1, 1 ) ))
+
+		if math.Abs(float64( m21 )) < 0.99999 {
+
+			target[0] = math.Atan2( float64(-m23), float64(m22) )
+			target[1] = math.Atan2( float64(-m31), float64(m11) )
+
+		} else {
+
+			target[0] = 0
+			target[1] = math.Atan2( float64(m13), float64(m33) )
+
 		}
-		if test < -0.499 { // singularity at south pole
-			heading = -2 * math.Atan2(float64(x), float64(w))
-			attitude = - math.Pi / 2
-			bank = 0
-		}
-		if math.IsNaN(heading) {
-			sqx := x*x
-			sqy := y*y
-			sqz := z*z
-			heading = math.Atan2(float64(2*y*w - 2*x*z) , float64(1 - 2*sqy - 2*sqz)) // Heading
-			attitude = math.Asin(float64(2*test)) // attitude
-			bank = math.Atan2(float64(2*x*w - 2*y*z) , float64(1 - 2*sqx - 2*sqz) ) // bank
+
+	case XZY:
+		target[2] = Number(math.Asin( -clamp( m12, -1, 1 ) ))
+
+		if math.Abs(float64( m12 )) < 0.99999 {
+
+			target[0] = math.Atan2( float64(m32), float64(m22) )
+			target[1] = math.Atan2( float64(m13), float64(m11) )
+
+		} else {
+
+			target[0] = math.Atan2( float64(-m23), float64(m33) )
+			target[1] = 0
+
 		}
 	}
-
-	target[1] = Number(heading) // yaw, theta, y
-	target[2] = Number(attitude) // pitch, phi, z
-	target[0] = Number(bank) // roll, psi, x
 
 	return target
 }
