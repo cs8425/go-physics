@@ -24,4 +24,13 @@ func almostEquals(n, n1 Number) (bool) {
 	return true
 }
 
+func clamp(value, min, max Number) (Number) {
+	val := math.Max( float64(min), math.Min( float64(max), float64(value) ) )
+	return Number(val)
+}
+
+func clampF(value Number, min float64, max float64) (float64) {
+	val := math.Max( min, math.Min( max, float64(value) ) )
+	return val
+}
 

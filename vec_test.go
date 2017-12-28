@@ -4,10 +4,10 @@ import (
 	"testing"
 )
 
-func TestEquals(t *testing.T) {
+func TestVec3Equals(t *testing.T) {
 
-        var v = NewVec3().Set(1, 2, 3)
-        var u = NewVec3().Set(4, 5, 6)
+	var v = NewVec3().Set(1, 2, 3)
+	var u = NewVec3().Set(4, 5, 6)
 
 	if v.IsEquals(u) {
 		t.Error("should not equal:", v, u)
@@ -26,13 +26,13 @@ func TestEquals(t *testing.T) {
 
 }
 
-func TestCross(t *testing.T) {
+func TestVec3Cross(t *testing.T) {
 
-        var vok = NewVec3().Set(-3, 6, -3)
+	var vok = NewVec3().Set(-3, 6, -3)
 
-        var v = NewVec3().Set(1, 2, 3)
-        var u = NewVec3().Set(4, 5, 6)
-        v = v.Cross(u, nil)
+	var v = NewVec3().Set(1, 2, 3)
+	var u = NewVec3().Set(4, 5, 6)
+	v = v.Cross(u, nil)
 
 	if !v.IsEquals(vok) {
 		t.Error("Error Calculating cross product, got ", v, vok)
@@ -46,10 +46,10 @@ func TestCross(t *testing.T) {
 	}
 }
 
-func TestDot(t *testing.T) {
+func TestVec3Dot(t *testing.T) {
 
-        var v = NewVec3().Set(1, 2, 3)
-        var u = NewVec3().Set(4, 5, 6)
+	var v = NewVec3().Set(1, 2, 3)
+	var u = NewVec3().Set(4, 5, 6)
 	var dot = v.Dot(u)
 
 	if dot != (4 + 10 + 18) {
@@ -66,12 +66,12 @@ func TestDot(t *testing.T) {
 	}
 }
 
-func TestVAdd(t *testing.T) {
+func TestVec3VAdd(t *testing.T) {
 
-        var vok = NewVec3().Set(5, 7, 9)
+	var vok = NewVec3().Set(5, 7, 9)
 
-        var v = NewVec3().Set(1, 2, 3)
-        var u = NewVec3().Set(4, 5, 6)
+	var v = NewVec3().Set(1, 2, 3)
+	var u = NewVec3().Set(4, 5, 6)
 	v = v.VAdd(u, nil)
 
 	if !v.IsEquals(vok) {
@@ -88,10 +88,10 @@ func TestVAdd(t *testing.T) {
 
 }
 
-func TestIsAntiparallelTo(t *testing.T) {
+func TestVec3IsAntiparallelTo(t *testing.T) {
 
-        var v = NewVec3().Set(1, 0, 0)
-        var u = NewVec3().Set(-1, 0, 0)
+	var v = NewVec3().Set(1, 0, 0)
+	var u = NewVec3().Set(-1, 0, 0)
 
 	if !v.IsAntiparallelTo(u) {
 		t.Error("Error IsAntiparallelTo, got ", v.IsAntiparallelTo(u))

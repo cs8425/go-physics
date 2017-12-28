@@ -62,6 +62,32 @@ func (q *Quat) Copy(source *Quat) (*Quat) {
 
 
 /**
+ * Check if a quaternion equals is equal to another one.
+ * @method IsEquals
+ * @param {Vec3} v
+ * @return bool
+ */
+func (q *Quat) IsEquals(q1 *Quat) (bool) {
+	if (q[0] == q1[0]) && (q[1] == q1[1]) && (q[2] == q1[2]) && (q[3] == q1[3]) {
+		return true
+	}
+	return false
+}
+
+/**
+ * Check if a quaternion equals is almost equal to another one.
+ * @method almostEquals
+ * @param {Vec3} v
+ * @return bool
+ */
+func (q *Quat) AlmostEquals(q1 *Quat) (bool) {
+	if almostEquals(q[0], q1[0]) && almostEquals(q[1], q1[1]) && almostEquals(q[2], q1[2]) && almostEquals(q[3], q1[3]) {
+		return true
+	}
+	return false
+}
+
+/**
  * Set the quaternion components given an axis and an angle.
  * @method setFromAxisAngle
  * @param {Vec3} axis
@@ -283,7 +309,9 @@ func (q *Quat) ToEuler(target *Vec3, order AxisOrder) (*Vec3) {
 		target = NewVec3()
 	}
 
-	var heading, attitude, bank float64
+	var attitude, bank float64
+	heading := math.NaN()
+
 	x, y, z, w := q[0], q[1], q[2], q[3]
 
 	switch order {
@@ -311,9 +339,9 @@ func (q *Quat) ToEuler(target *Vec3, order AxisOrder) (*Vec3) {
 		}
 	}
 
-	target[0] = Number(heading) // yaw, theta
-	target[1] = Number(attitude) // pitch, phi
-	target[2] = Number(bank) // roll, psi
+	target[1] = Number(heading) // yaw, theta, y
+	target[2] = Number(attitude) // pitch, phi, z
+	target[0] = Number(bank) // roll, psi, x
 
 	return target
 }
