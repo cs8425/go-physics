@@ -149,7 +149,7 @@ func (v *Vec3) Negate(target *Vec3) (*Vec3) {
 
 
 /**
- * Vector addition / subtraction
+ * Vector addition
  * @method VAdd
  * @param {Vec3} v
  * @param {Vec3} target Optional.
@@ -163,6 +163,25 @@ func (v *Vec3) VAdd(v1 *Vec3, target *Vec3) (*Vec3) {
 	target[0] = v[0] + v1[0]
 	target[1] = v[1] + v1[1]
 	target[2] = v[2] + v1[2]
+
+	return target
+}
+
+/**
+ * Vector subtraction
+ * @method VSub
+ * @param {Vec3} v
+ * @param {Vec3} target Optional. Target to save in.
+ * @return {Vec3}
+ */
+func (v *Vec3) VSub(v1 *Vec3, target *Vec3) (*Vec3) {
+	if target == nil {
+		target = &Vec3{}
+	}
+
+	target[0] = v[0] - v1[0]
+	target[1] = v[1] - v1[1]
+	target[2] = v[2] - v1[2]
 
 	return target
 }
